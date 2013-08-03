@@ -62,9 +62,10 @@
                 for (var i = 0; i < lastword.length; i++)
                     count[lastword[i]]++;
 
-                console.log(output);
-
                 _recurse_solve_letters(output, dictnode, {}, function(word) {
+                    if (word.length <= 2)
+                        return;
+
                     /* build the set of remaining letters, after playing this */
                     var c = {};
                     for (var k in count)
@@ -83,8 +84,10 @@
                         got_solutions = true;
                     } else {
                         solve_letters(s, function(word2) {
-                            got_solutions = true;
-                            return false;
+                            if (word2.length > 2) {
+                                got_solutions = true;
+                                return false;
+                            }
                         });
                     }
 
