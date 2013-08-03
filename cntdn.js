@@ -7,10 +7,11 @@
 
 function _recurse_solve_letters(letters, node, used_letter, cb, answer) {
     if (node[0])
-        cb(answer);
+        if (cb(answer) == false)
+            return false;
 
     if (answer.length == letters.length)
-        return;
+        return true;
 
     var done = {};
 
@@ -23,10 +24,13 @@ function _recurse_solve_letters(letters, node, used_letter, cb, answer) {
         if (node[c]) {
             used_letter[i] = true;
             done[c] = true;
-            _recurse_solve_letters(letters, node[c], used_letter, cb, answer+c);
+            if (_recurse_solve_letters(letters, node[c], used_letter, cb, answer+c) == false)
+                return false;
             used_letter[i] = false;
         }
     }
+
+    return true;
 }
 
 function solve_letters(letters, cb) {

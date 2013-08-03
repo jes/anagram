@@ -25,3 +25,9 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
+
+.good-word {
+}
+.bad-word {
+    color: #888;
+}
