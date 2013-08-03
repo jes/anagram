@@ -1,0 +1,27 @@
+body {
+    font-family: sans-serif;
+}
+
+.unused {
+    color: blue;
+}
+
+.excess {
+    color: red;
+}
+
+.letters {
+    font-size: 3em;
+    font-family: monospace;
+}
+
+.suggestions {
+    font-size: 0.7em;
+    font-family: monospace;
+}
+
+.container {
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
