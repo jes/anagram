@@ -2,17 +2,20 @@
 <html>
 <head>
     <title>Anagram</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
     <h1>Anagram</h1>
     <label for="input-letters">Input letters:</label>
-    <input id="input-letters" type="text">
+    <input id="input-letters" type="text"><br>
 
     <label for="anagram-letters">Anagram letters:</label>
-    <input id="anagram-letters" type="text">
+    <input id="anagram-letters" type="text"><br>
 
-    <span id="unused-letters"></span>
-    <span style="color:red" id="excess-letters"></span>
+    <div>
+        <span class="unused letters" id="unused-letters"></span>
+        <span class="excess letters" id="excess-letters"></span>
+    </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="anagram.js"></script>

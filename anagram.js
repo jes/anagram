@@ -7,8 +7,8 @@
     };
 
     var refresh_unused = function() {
-        var letters = $('#input-letters').val();
-        var used = $('#anagram-letters').val();
+        var letters = $('#input-letters').val().toUpperCase();
+        var used = $('#anagram-letters').val().toUpperCase();
 
         var count = {};
 
@@ -27,6 +27,8 @@
         var excess = [];
 
         for (var letter in count) {
+            if (letter.match(/\W/))
+                continue;
             for (var i = 0; i < count[letter]; i++)
                 output.push(letter);
             for (var i = 0; i > count[letter]; i--)
