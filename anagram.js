@@ -48,12 +48,14 @@
             var words = [];
             var dictnode = dictionary;
 
-            for (var i = 0; i < lastword.length; i++)
+            for (var i = 0; dictnode && i < lastword.length; i++)
                 dictnode = dictnode[lastword[i]];
 
-            _recurse_solve_letters(output.toLowerCase(), dictnode, {}, function(word) {
-                words.push(word)
-            }, lastword);
+            if (dictnode) {
+                _recurse_solve_letters(output.toLowerCase(), dictnode, {}, function(word) {
+                    words.push(word)
+                }, lastword);
+            }
 
             words.sort(function(a, b) { return b.length - a.length });
             $('#suggestions').html(words.join('\n'));
