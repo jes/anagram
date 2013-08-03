@@ -41,12 +41,23 @@
         $('#unused-letters').html(output);
         $('#excess-letters').html(excess);
 
-        var words = [];
-        solve_letters(output.toLowerCase(), function(word) {
-            words.push(word);
-        });
-        words.sort(function(a, b) { return b.length - a.length });
-        $('#suggestions').html(words.join('\n'));
+        var inputs = $('#anagram-letters').val().split(' ');
+        if (inputs.length > 0) {
+            var lastword = inputs[inputs.length-1].toLowerCase();
+
+            var words = [];
+            var dictnode = dictionary;
+
+            for (var i = 0; i < lastword.length; i++)
+                dictnode = dictnode[lastword[i]];
+
+            _recurse_solve_letters(output.toLowerCase(), dictnode, {}, function(word) {
+                words.push(word)
+            }, lastword);
+
+            words.sort(function(a, b) { return b.length - a.length });
+            $('#suggestions').html(words.join('\n'));
+        }
     };
 
     $('#input-letters').on('input', refresh);
