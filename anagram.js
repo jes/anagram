@@ -6,7 +6,7 @@
         return o;
     };
 
-    var refresh_unused = function() {
+    var refresh = function() {
         var letters = $('#input-letters').val().toUpperCase();
         var used = $('#anagram-letters').val().toUpperCase();
 
@@ -27,7 +27,7 @@
         var excess = [];
 
         for (var letter in count) {
-            if (letter.match(/\W/))
+            if (!letter.match(/[A-Z]/))
                 continue;
             for (var i = 0; i < count[letter]; i++)
                 output.push(letter);
@@ -35,10 +35,20 @@
                 excess.push(letter);
         }
 
-        $('#unused-letters').html(shuffle(output).join(''));
-        $('#excess-letters').html(shuffle(excess).join(''));
+        output = shuffle(output).join('');
+        excess = shuffle(excess).join('');
+
+        $('#unused-letters').html(output);
+        $('#excess-letters').html(excess);
+
+        var words = [];
+        solve_letters(output.toLowerCase(), function(word) {
+            words.push(word);
+        });
+        words.sort(function(a, b) { return b.length - a.length });
+        $('#suggestions').html(words.join('\n'));
     };
 
-    $('#input-letters').on('input', refresh_unused);
-    $('#anagram-letters').on('input', refresh_unused);
+    $('#input-letters').on('input', refresh);
+    $('#anagram-letters').on('input', refresh);
 })();

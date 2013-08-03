@@ -5,16 +5,19 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <h1>Anagram</h1>
-    <label for="input-letters">Input letters:</label>
-    <input id="input-letters" type="text"><br>
+    <div class="container">
+        <h1>Anagram</h1>
+        <label for="input-letters">Input letters:</label>
+        <input id="input-letters" type="text"><br>
 
-    <label for="anagram-letters">Anagram letters:</label>
-    <input id="anagram-letters" type="text"><br>
+        <label for="anagram-letters">Anagram letters:</label>
+        <input id="anagram-letters" type="text"><br>
 
-    <div>
-        <span class="unused letters" id="unused-letters"></span>
-        <span class="excess letters" id="excess-letters"></span>
+        <div>
+            <span class="unused letters" id="unused-letters"></span>
+            <span class="excess letters" id="excess-letters"></span><br>
+            <span class="suggestions" id="suggestions"></span>
+        </div>
     </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -22,4 +25,4 @@
     <script src="cntdn.js"></script>
     <script src="anagram.js"></script>
 </body>
-</html
+</html>
