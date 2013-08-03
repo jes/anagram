@@ -71,6 +71,6 @@
         }
     };
 
-    $('#input-letters').on('input', refresh);
-    $('#anagram-letters').on('input', refresh);
+    $('#input-letters').on('keyup', refresh);
+    $('#anagram-letters').on('keyup', refresh);
 })();
