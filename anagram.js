@@ -44,9 +44,9 @@
         $('#unused-letters').html(output);
         $('#excess-letters').html(excess);
 
-        /* try to complete the word the user is typing */
+        /* try to complete the word the user is typing (unless they've used all the inputs) */
         var inputs = $('#anagram-letters').val().split(' ');
-        if (inputs.length > 0) {
+        if (inputs.length > 0 && output.length > 0) {
             var lastword = inputs[inputs.length-1].toLowerCase();
 
             var words = [];
@@ -66,6 +66,8 @@
             /* put longer words first */
             words.sort(function(a, b) { return b.length - a.length });
             $('#suggestions').html(words.join('\n'));
+        } else {
+            $('#suggestions').html('');
         }
     };
 
