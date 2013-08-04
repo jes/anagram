@@ -161,4 +161,6 @@
     $('#input-letters').on('input', refresh);
     $('#anagram-letters').on('input', refresh);
     $('#anagram-letters').on('keydown', maybe_refresh);
+
+    refresh();
 })();
