@@ -59,60 +59,64 @@
 
             /* if there is a dictionary node here, recurse through it remembering the words */
             if (dictnode) {
-                for (var i = 0; i < lastword.length; i++)
-                    count[lastword[i]]++;
+                var recurse = function(d, s, n, is_topword) {
+                    var w = '';
 
-                _recurse_solve_letters(output, dictnode, {}, function(word) {
-                    if (word.length <= 2)
-                        return;
-
-                    /* build the set of remaining letters, after playing this */
-                    var c = {};
-                    for (var k in count)
-                        c[k] = count[k];
-                    for (var i = 0; i < word.length; i++)
-                        c[word[i]]--;
-
-                    var s = '';
-                    for (var k in c)
-                        for (var i = 0; i < c[k]; i++)
-                            s += k;
-
-                    /* solve_letters */
-                    var got_solutions = false;
-                    if (s == '') {
-                        got_solutions = true;
-                    } else {
-                        solve_letters(s, function(word2) {
-                            if (word2.length > 2) {
-                                got_solutions = true;
-                                return false;
-                            }
-                        });
+                    if (d[0]) {
+                        var goodness;
+                        if (n==0)
+                            goodness = true;
+                        else
+                            goodness = recurse(dictionary, s + ' ', n, false);
+                        if (is_topword) {
+                            words.push({
+                                "word": s,
+                                "good": goodness,
+                            });
+                        }
                     }
 
-                    /* if there were solutions, add it like normal; otherwise, make it appear inferior */
-                    if (got_solutions)
-                        words.push({
-                            "word": word,
-                            "good": true,
-                        });
-                    else
-                        words.push({
-                            "word": word,
-                            "good": false,
-                        });
-                }, lastword);
+                    if (n == 0) {
+                        if (d[0]) {
+                            console.log(s);
+                            return true;
+                        }
+                        return false;
+                    }
+
+                    var goodness = false;
+
+                    for (var k in count) {
+                        if (count[k] <= 0 || !d[k])
+                            continue;
+
+                        count[k]--;
+                        if (recurse(d[k], s + k, n-1, is_topword))
+                            goodness = true;
+                        count[k]++;
+                    }
+
+                    return goodness;
+                };
+
+                var n = 0;
+                for (var k in count)
+                    if (k.match(/[a-z]/))
+                        n += count[k];
+                /* TODO: take count as an arg; improve variable names in recurse() */
+                recurse(dictnode, lastword, n, true);
+
+                /* put longer words first */
+                words.sort(function(a, b) {
+                    if (b.good != a.good)
+                        return b.good - a.good;
+                    if (b.word.length != a.word.length)
+                        return b.word.length - a.word.length;
+                    return 0;
+                });
             }
 
-            /* put longer words first */
-            words.sort(function(a, b) {
-                if (b.good != a.good)
-                    return b.good - a.good;
-                if (b.word.length != a.word.length)
-                    return b.word.length - a.word.length;
-                return 0;
-            });
+            /* TODO: switch "good" vs "bad" to show what proportion of the letters can be used */
             $('#suggestions').html(words.map(function(w) {
                 return '<span class=' + (w.good ? 'good-word' : 'bad-word') + '>' + w.word + '</span>';
             }).join(' '));
