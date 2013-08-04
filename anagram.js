@@ -80,7 +80,7 @@
                         var g = recurse(dictionary, s + ' ', n, total_letters, 0, count, false);
                         if (g > goodness)
                             goodness = g;
-                        if (is_topword) {
+                        if (is_topword && (total_letters < 5 || s.length > 2)) {
                             words.push({
                                 "word": s,
                                 "good": goodness,
