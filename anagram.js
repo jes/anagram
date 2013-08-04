@@ -14,6 +14,8 @@
     };
 
     var refresh = function() {
+        var start = new Date().getTime();
+
         var letters = $('#input-letters').val().toLowerCase();
         var used = $('#anagram-letters').val().toLowerCase();
 
@@ -145,8 +147,18 @@
         } else {
             $('#suggestions').html('');
         }
+
+        var end = new Date().getTime();
+        var time = (end - start) / 1000;
+        $('#timer').html(time + 's');
     };
 
-    $('#input-letters').on('keyup', refresh);
-    $('#anagram-letters').on('keyup', refresh);
+    var maybe_refresh = function(e) {
+        if (e.keyCode == 17) /* ctrl */
+            refresh();
+    };
+
+    $('#input-letters').on('input', refresh);
+    $('#anagram-letters').on('input', refresh);
+    $('#anagram-letters').on('keydown', maybe_refresh);
 })();

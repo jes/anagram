@@ -31,3 +31,8 @@ body {
 .bad-word {
     color: #aaa;
 }
+
+.timer {
+    font-size: 0.7em;
+    font-style: italic;
+}
