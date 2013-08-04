@@ -59,15 +59,14 @@
 
             /* if there is a dictionary node here, recurse through it remembering the words */
             if (dictnode) {
-                var recurse = function(d, s, n, is_topword) {
-                    var w = '';
+                var recurse = function(d, s, n, total_letters, thisword, count, is_topword) {
+                    var goodness = 0;
 
                     if (d[0]) {
-                        var goodness;
-                        if (n==0)
-                            goodness = true;
-                        else
-                            goodness = recurse(dictionary, s + ' ', n, false);
+                        goodness = (total_letters - n) / total_letters;
+                        var g = recurse(dictionary, s + ' ', n, total_letters, 0, count, false);
+                        if (g > goodness)
+                            goodness = g;
                         if (is_topword) {
                             words.push({
                                 "word": s,
@@ -79,20 +78,19 @@
                     if (n == 0) {
                         if (d[0]) {
                             console.log(s);
-                            return true;
+                            return 1;
                         }
-                        return false;
+                        return (total_letters - thisword) / total_letters;
                     }
-
-                    var goodness = false;
 
                     for (var k in count) {
                         if (count[k] <= 0 || !d[k])
                             continue;
 
                         count[k]--;
-                        if (recurse(d[k], s + k, n-1, is_topword))
-                            goodness = true;
+                        var g = recurse(d[k], s + k, n-1, total_letters, thisword+1, count, is_topword);
+                        if (g > goodness)
+                            goodness = g;
                         count[k]++;
                     }
 
@@ -103,8 +101,7 @@
                 for (var k in count)
                     if (k.match(/[a-z]/))
                         n += count[k];
-                /* TODO: take count as an arg; improve variable names in recurse() */
-                recurse(dictnode, lastword, n, true);
+                recurse(dictnode, lastword, n, n, lastword.length, count, true);
 
                 /* put longer words first */
                 words.sort(function(a, b) {
@@ -116,9 +113,16 @@
                 });
             }
 
-            /* TODO: switch "good" vs "bad" to show what proportion of the letters can be used */
             $('#suggestions').html(words.map(function(w) {
-                return '<span class=' + (w.good ? 'good-word' : 'bad-word') + '>' + w.word + '</span>';
+                var c;
+                if (w.good == 1)
+                    c = 0;
+                else
+                    c = parseInt(255 * (1.4 - w.good));
+                if (c < 0)   c = 0;
+                if (c > 200) c = 200;
+                var rgb = "rgb(" + c + "," + c + "," + c + ")";
+                return '<span style="color: ' + rgb + '">' + w.word + '</span>';
             }).join(' '));
         } else {
             $('#suggestions').html('');
