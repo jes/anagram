@@ -72,7 +72,7 @@
                     var goodness = 0;
 
                     var strcount = strify(count);
-                    if (!is_topword && cache[strcount] !== undefined)
+                    if (!is_topword && d == dictionary && cache[strcount] !== undefined)
                         return cache[strcount];
 
                     if (d[0]) {
@@ -110,7 +110,8 @@
                             break;
                     }
 
-                    cache[strcount] = goodness;
+                    if (d == dictionary)
+                        cache[strcount] = goodness;
                     return goodness;
                 };
 
