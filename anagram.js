@@ -1,9 +1,16 @@
 (function() {
     //+ Jonas Raoni Soares Silva
     //@ http://jsfromhell.com/array/shuffle [v1.0]
-    function shuffle(o){ //v1.0
+    var shuffle = function(o) {
         for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
         return o;
+    };
+
+    var strify = function(h) {
+        var str = '';
+        for (k in h)
+            str += k + ',' + h[k] + ';';
+        return str;
     };
 
     var refresh = function() {
@@ -59,8 +66,14 @@
 
             /* if there is a dictionary node here, recurse through it remembering the words */
             if (dictnode) {
+                var cache = {};
+
                 var recurse = function(d, s, n, total_letters, thisword, count, is_topword) {
                     var goodness = 0;
+
+                    var strcount = strify(count);
+                    if (!is_topword && cache[strcount] !== undefined)
+                        return cache[strcount];
 
                     if (d[0]) {
                         goodness = (total_letters - n) / total_letters;
@@ -92,8 +105,12 @@
                         if (g > goodness)
                             goodness = g;
                         count[k]++;
+
+                        if (goodness == 1 && !is_topword)
+                            break;
                     }
 
+                    cache[strcount] = goodness;
                     return goodness;
                 };
 
