@@ -8,8 +8,11 @@
 
     var strify = function(h) {
         var str = '';
-        for (k in h)
-            str += k + ',' + h[k] + ';';
+        for (var i = 0; i < 26; i++) {
+            var c = String.fromCharCode(97 + i);
+            if (h[c] > 0)
+                str += h[c] + ";";
+        }
         return str;
     };
 
