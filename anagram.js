@@ -86,11 +86,13 @@
 
                     var strcount;
 
-                    if (d[0]) {
+                    if (d == dictionary) {
                         strcount = strify(count);
                         if (!is_topword && cache[strcount] !== undefined)
                             return cache[strcount]
+                    }
 
+                    if (d[0]) {
                         goodness = (total_letters - n) / total_letters;
                         var g = recurse(dictionary, s + ' ', n, total_letters, 0, count, false);
                         if (g > goodness)
@@ -117,7 +119,7 @@
                             break;
                     }
 
-                    if (d[0])
+                    if (d == dictionary)
                         cache[strcount] = goodness;
                     return goodness;
                 };
