@@ -76,11 +76,21 @@
                 var recurse = function(d, s, n, total_letters, thisword, count, is_topword) {
                     var goodness = 0;
 
-                    var strcount = strify(count);
-                    if (!is_topword && d == dictionary && cache[strcount] !== undefined)
-                        return cache[strcount];
+                    if (n == 0) {
+                        if (d[0]) {
+                            console.log(s);
+                            return 1;
+                        }
+                        return (total_letters - thisword) / total_letters;
+                    }
+
+                    var strcount;
 
                     if (d[0]) {
+                        strcount = strify(count);
+                        if (!is_topword && cache[strcount] !== undefined)
+                            return cache[strcount]
+
                         goodness = (total_letters - n) / total_letters;
                         var g = recurse(dictionary, s + ' ', n, total_letters, 0, count, false);
                         if (g > goodness)
@@ -91,14 +101,6 @@
                                 "good": goodness,
                             });
                         }
-                    }
-
-                    if (n == 0) {
-                        if (d[0]) {
-                            console.log(s);
-                            return 1;
-                        }
-                        return (total_letters - thisword) / total_letters;
                     }
 
                     for (var k in count) {
@@ -115,7 +117,7 @@
                             break;
                     }
 
-                    if (d == dictionary)
+                    if (d[0])
                         cache[strcount] = goodness;
                     return goodness;
                 };
