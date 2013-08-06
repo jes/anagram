@@ -76,14 +76,6 @@
                 var recurse = function(d, s, n, total_letters, thisword, count, is_topword) {
                     var goodness = 0;
 
-                    if (n == 0) {
-                        if (d[0]) {
-                            console.log(s);
-                            return 1;
-                        }
-                        return (total_letters - thisword) / total_letters;
-                    }
-
                     var strcount;
 
                     if (d == dictionary) {
@@ -103,6 +95,14 @@
                                 "good": goodness,
                             });
                         }
+                    }
+
+                    if (n == 0) {
+                        if (d[0]) {
+                            console.log(s);
+                            return 1;
+                        }
+                        return (total_letters - thisword) / total_letters;
                     }
 
                     for (var k in count) {
