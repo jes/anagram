@@ -11,7 +11,7 @@
         for (var i = 0; i < 26; i++) {
             var c = String.fromCharCode(97 + i);
             if (h[c] > 0)
-                str += h[c] + ";";
+                str += c + h[c] + ";";
         }
         return str;
     };
