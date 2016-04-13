@@ -151,6 +151,7 @@
                     c = parseInt(255 * (1.4 - w.good));
                 if (c < 0)   c = 0;
                 if (c > 200) c = 200;
+                if (isNaN(c)) c = 0;
                 var rgb = "rgb(" + c + "," + c + "," + c + ")";
                 return '<a class="clickword" href="javascript:void(0)" style="color: ' + rgb + '">' + w.word + '</a>';
             }).join(' '));
