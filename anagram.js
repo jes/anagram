@@ -53,6 +53,10 @@
         output = shuffle(output).join('');
         excess = shuffle(excess).join('');
 
+        if (letters.length != 0 && output.length == 0 && excess.length == 0) {
+            output = '&#10004; ' + used.toUpperCase();
+        }
+
         $('#unused-letters').html(output.toUpperCase());
         $('#excess-letters').html(excess.toUpperCase());
 
@@ -99,7 +103,6 @@
 
                     if (n == 0) {
                         if (d[0]) {
-                            console.log(s);
                             return 1;
                         }
                         return (total_letters - thisword) / total_letters;
@@ -149,8 +152,17 @@
                 if (c < 0)   c = 0;
                 if (c > 200) c = 200;
                 var rgb = "rgb(" + c + "," + c + "," + c + ")";
-                return '<span style="color: ' + rgb + '">' + w.word + '</span>';
+                return '<a class="clickword" href="javascript:void(0)" style="color: ' + rgb + '">' + w.word + '</a>';
             }).join(' '));
+
+            $('.clickword').on('click', function(e) {
+                var word = $(e.target).text();
+                var inputs = $('#anagram-letters').val().split(' ');
+                inputs[inputs.length-1] = word;
+                $('#anagram-letters').val(inputs.join(' ') + ' ');
+                refresh();
+                return false;
+            });
         } else {
             $('#suggestions').html('');
         }
