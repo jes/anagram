@@ -8,50 +8,73 @@
     <div class="container">
         <h1>Anagram Deputy</h1>
 
+        <p style="margin-top: -20px"><i style="font-size: 0.8em">a <a href="http://jes.xxx/">James Stanley</a> project</i></p>
+
         <h4>An extension of your brain that helps you find anagrams.</h4>
 
         <p>
-        Anagram Deputy helps you find anagrams. It is <b>not</b> an
-        anagram solver in its own right. There are <a href="http://anagram-solver.net/">lots</a>
-        <a href="http://www.ssynth.co.uk/~gay/anagram.html">of</a> <a href="http://www.solverscrabble.com/">fully</a> <a href="http://www.wordsmith.org/anagram/">automated</a>
-        <a href="http://www.crossword-dictionary.com/anagram.asp">anagram</a> <a href="http://www.oneacross.com/anagrams/">solvers</a> available if that
-        is what you're looking for. Anagram Deputy typically allows you to
-        find better anagrams, by augmenting your language processing
-        abilities with your computer's search and keeping-track-of-lots-of-letters abilities.
-        </p>
-
-        <p>
-        In the top box, enter the phrase you're trying to find an anagram for.
-        The letters available appear in blue, in a scrambled order. Start working on the
-        anagram in the second box. The blue letters show you which letters are
+        The blue letters show you which letters are
         still remaining, and the small words underneath show you options for
-        completing the word you're typing (or a new word, if none). Greyed-out
-        suggestions are words that can be made, but with which a full anagram
-        can not be made using the words in the dictionary. These are sometimes
-        still useful in case you can use words that are not in the dictionary (e.g.
-        names).
+        words.
         </p>
 
         <p>
         You can hit Ctrl to rescramble the blue letters.
         </p>
 
-        <label for="input-letters">Input letters:</label>
-        <input id="input-letters" type="text"><br>
+        <p>
+        Red letters are letters you've used that aren't available.
+        </p>
 
-        <label for="anagram-letters">Anagram letters:</label>
-        <input id="anagram-letters" type="text"><br>
+        <table width="100%">
+        <tr>
+        <td><label class="letters" for="input-letters">Input:</label></td>
+        <td width="100%"><input class="input letters" style="width:100%" id="input-letters" type="text"></td>
+        </tr>
+
+        <tr>
+        <td><label class="letters" for="anagram-letters">Anagram:</label></td>
+        <td><input class="anagram letters" style="width:100%" id="anagram-letters" type="text"></td>
+        </tr>
+        </table>
+
+        <p>I'd love to hear any feedback you have! Get in touch at <a href="mailto:jes@jes.xxx">jes@jes.xxx</a>.</p>
 
         <div>
             <span class="unused letters" id="unused-letters"></span>
             <span class="excess letters" id="excess-letters"></span><br>
-            <span class="timer" id="timer"></span><br>
             <span class="suggestions" id="suggestions"></span>
         </div>
+
+        <hr>
+        <h3>Some Suggestions...</h3>
+        <table>
+        <tr><td>Wetherspoons</td><td>=&gt; The snow ropes</td></tr>
+        <tr><td>Internet Services Developer</td><td>=&gt; Eleven terrorist pen devices</td></tr>
+        <tr><td>Faber Castell</td><td>=&gt; Rectal fables</td></tr>
+        <tr><td>Input phrase</td><td>=&gt; Pin-up haters</td></tr>
+        </table>
+        <p>Send your suggestions to <a href="mailto:jes@jes.xxx">jes@jes.xxx</a> and I'll add them here.</p>
     </div>
 
-    <script src="://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="dictionary.js"></script>
     <script src="anagram.js"></script>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-40664549-1']);
+      _gaq.push(['_setDomainName', 'incoherency.co.uk']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
 </body>
 </html>

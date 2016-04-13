@@ -8,19 +8,23 @@
 
     var strify = function(h) {
         var str = '';
-        for (var i = 0; i < 26; i++) {
-            var c = String.fromCharCode(97 + i);
-            if (h[c] > 0)
-                str += c + h[c] + ";";
-        }
+        for (k in h)
+            str += k + ',' + h[k] + ';';
         return str;
     };
+
+    var posted = {};
 
     var refresh = function() {
         var start = new Date().getTime();
 
         var letters = $('#input-letters').val().toLowerCase();
         var used = $('#anagram-letters').val().toLowerCase();
+
+        if (used.length > 0 && !posted[letters]) {
+            _gaq.push(['_trackEvent', 'anagram', 'anagram', letters]);
+            posted[letters] = true;
+        }
 
         var count = {};
 
@@ -80,13 +84,9 @@
                 var recurse = function(d, s, n, total_letters, thisword, count, is_topword) {
                     var goodness = 0;
 
-                    var strcount;
-
-                    if (d == dictionary) {
-                        strcount = strify(count);
-                        if (!is_topword && cache[strcount] !== undefined)
-                            return cache[strcount]
-                    }
+                    var strcount = strify(count);
+                    if (!is_topword && d == dictionary && cache[strcount] !== undefined)
+                        return cache[strcount];
 
                     if (d[0]) {
                         goodness = (total_letters - n) / total_letters;
@@ -178,6 +178,7 @@
     };
 
     $('#input-letters').on('input', refresh);
+    $('#input-letters').on('keydown', maybe_refresh);
     $('#anagram-letters').on('input', refresh);
     $('#anagram-letters').on('keydown', maybe_refresh);
 
