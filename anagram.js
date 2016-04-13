@@ -178,10 +178,24 @@
             refresh();
     };
 
+    var remove_last_word = function() {
+        var inputs = $('#anagram-letters').val().split(' ');
+        if (inputs[inputs.length-1] == '')
+            inputs.pop();
+        inputs.pop();
+        if (inputs.length > 0) {
+            $('#anagram-letters').val(inputs.join(' ') + ' ');
+        } else {
+            $('#anagram-letters').val('');
+        }
+        refresh();
+    }
+
     $('#input-letters').on('input', refresh);
     $('#input-letters').on('keydown', maybe_refresh);
     $('#anagram-letters').on('input', refresh);
     $('#anagram-letters').on('keydown', maybe_refresh);
+    $('#remove-word-btn').on('click', remove_last_word);
 
     refresh();
 })();
